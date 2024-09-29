@@ -3,9 +3,9 @@
 # Distributed under the OSI-approved BSD 2-Clause License.  See accompanying
 # file `LICENSE` for more details.
 
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.25)
 
-project(freetype-gl LANGUAGES C CXX)
+project(freetype-gl LANGUAGES CXX)
 
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED TRUE)
@@ -23,7 +23,7 @@ add_definitions("-DSOURCE_PATH_SIZE=${SOURCE_PATH_SIZE}")
 message(STATUS "Building for ${CMAKE_SYSTEM_NAME} target system")
 message(STATUS "Building with ${CMAKE_C_COMPILER_ID} compiler")
 
-set(freetype-gl_WITH_GLEW_DEFAULT ON)
+set(freetype-gl_WITH_GLEW_DEFAULT OFF)
 
 if((${CMAKE_SYSTEM_NAME} MATCHES "Darwin") OR
     (${CMAKE_SYSTEM_NAME} MATCHES "Android"))
@@ -35,11 +35,11 @@ option(freetype-gl_WITH_GLEW
     ${freetype-gl_WITH_GLEW_DEFAULT})
 option(freetype-gl_WITH_GLAD "Use the GLAD gl loader" OFF)
 option(freetype-gl_USE_VAO "Use a VAO to render a vertex_buffer instance (required for forward compatible OpenGL 3.0 contexts)" OFF)
-option(freetype-gl_BUILD_DEMOS "Build the freetype-gl example programs" ON)
-option(freetype-gl_BUILD_APIDOC "Build the freetype-gl API documentation" ON)
+option(freetype-gl_BUILD_DEMOS "Build the freetype-gl example programs" OFF)
+option(freetype-gl_BUILD_APIDOC "Build the freetype-gl API documentation" OFF)
 option(freetype-gl_BUILD_HARFBUZZ "Build the freetype-gl harfbuzz support (experimental)" OFF)
-option(freetype-gl_BUILD_MAKEFONT "Build the makefont tool" ON)
-option(freetype-gl_BUILD_TESTS "Build the tests" ON)
+option(freetype-gl_BUILD_MAKEFONT "Build the makefont tool" OFF)
+option(freetype-gl_BUILD_TESTS "Build the tests" OFF)
 option(freetype-gl_BUILD_SHARED "Build shared library" OFF)
 option(freetype-gl_OFF_SCREEN "Build for off-screen render (build libfreetype-gl.so only without GLX, demos must disable because of missing glfw)" OFF)
 
@@ -136,17 +136,13 @@ set(FREETYPE_GL_HDR
     font-manager.h
     freetype-gl.h
     markup.h
-    opengl.h
     platform.h
-    text-buffer.h
     texture-atlas.h
     texture-font.h
     utf8-utils.h
     ftgl-utils.h
     vec234.h
     vector.h
-    vertex-attribute.h
-    vertex-buffer.h
     freetype-gl-errdef.h
     ${PROJECT_BINARY_DIR}/config.h
 )
@@ -156,14 +152,11 @@ set(FREETYPE_GL_SRC
     edtaa3func.c
     font-manager.c
     platform.c
-    text-buffer.c
     texture-atlas.c
     texture-font.c
     utf8-utils.c
     ftgl-utils.c
     vector.c
-    vertex-attribute.c
-    vertex-buffer.c
 )
 
 if(NOT MSVC)
